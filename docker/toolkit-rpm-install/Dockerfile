@@ -23,7 +23,7 @@ RUN yum update -y && \
     yum clean all && \ 
     yum install -y perfsonar-toolkit && \
     # enable private IPs
-    sed -i 's/allow_internal_addresses[[:space:]]+0/allow_internal_addresses  1/' /etc/perfsonar/toolkit/web/web_admin.conf
+    sed -i 's/allow_internal_addresses  0/allow_internal_addresses  1/' /etc/perfsonar/toolkit/web/web_admin.conf
 
 #Copy test script
 #COPY ps_install_test /usr/bin/ps_install_test
