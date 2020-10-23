@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/Users/mj82/Downloads/testbed vagrant/toolkit-rpm","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}},"virtualbox":{"/home/vagrant/toolkit":{"guestpath":"/home/vagrant/toolkit","hostpath":"/Users/mj82/src/toolkit","disabled":false,"__vagrantfile":true}}}

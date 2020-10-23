@@ -1,0 +1,1 @@
+{"dependencies":[["netaddr",["= 2.0.4"]]],"checksum":"9810547bbaeeeed746f3179b310aebc3233f474e67d643e6eb1959b182099164","vagrant_version":"2.2.10"}
