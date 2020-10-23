@@ -1,6 +1,9 @@
 # Vagrant
 */.vagrant/
 
+# Vim
+.*.swp
+
 !Build/
 .last_cover_stats
 /META.yml

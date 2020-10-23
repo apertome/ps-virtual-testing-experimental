@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  centos_pwa:
+    image: perfsonar/dev-centos-clean:latest
+    build:
+        context: .
+        dockerfile: Dockerfile
+    tmpfs: 
+       - /run
+       - /tmp
+    volumes:
+       - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    ports:
+       - "8443:443"
+    #ulimits:
+    #   nproc: 65535
+    #   nofile:
+    #       soft: 20000
+    #       hard: 40000
+
