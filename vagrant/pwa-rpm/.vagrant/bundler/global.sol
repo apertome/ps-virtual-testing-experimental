@@ -1,1 +1,0 @@
-{"dependencies":[["netaddr",["= 2.0.4"]],["vagrant-disksize",["= 0.1.3"]],["vagrant-reload",["= 0.0.1"]]],"checksum":"1559de90b2413304ccf855e6f026e0963f0a8bbf3957f9c225723bcbc0e95884","vagrant_version":"2.2.10"}

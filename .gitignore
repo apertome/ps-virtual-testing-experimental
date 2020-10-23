@@ -1,5 +1,5 @@
 # Vagrant
-.vagrant/
+*/.vagrant/
 
 !Build/
 .last_cover_stats
