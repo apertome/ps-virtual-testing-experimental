@@ -1,3 +1,4 @@
+#FROM centos/systemd:latest
 FROM centos:7
 ENV container docker
 
@@ -17,6 +18,7 @@ RUN yum update -y && \
     yum install -y epel-release && \
     yum install -y http://linux.mirrors.es.net/perfsonar/el7/x86_64/4/packages/perfSONAR-repo-0.9-1.noarch.rpm && \
     yum install -y http://linux.mirrors.es.net/perfsonar/el7/x86_64/4/packages/perfSONAR-repo-nightly-minor-0.9-1.noarch.rpm && \
+    #yum install -y https://ps-jenkins.grnoc.iu.edu/nightly/el/7/x86_64/perfsonar/minor/packages/perfSONAR-repo-extras-0.10-1.49.b41e4e9fdbf6c79f04aac62c438a6253d93e24dd.noarch.rpm && \
     #yum install -y http://linux.mirrors.es.net/perfsonar/el7/x86_64/4/packages/perfSONAR-repo-nightly-patch-0.9-1.noarch.rpm && \
     #yum install -y http://linux.mirrors.es.net/perfsonar/el7/x86_64/4/packages/perfSONAR-repo-staging-0.9-1.noarch.rpm && \
     #sed -i 's/enabled = 1/enabled = 0/' /etc/yum.repos.d/perfSONA*.repo && \

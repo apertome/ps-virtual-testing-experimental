@@ -1,7 +1,8 @@
-version: '3.8'
+version: '3.5'
 services:
   toolkit_fresh:
     image: perfsonar/dev-centos-clean:latest
+    privileged: true
     build:
         context: .
         dockerfile: Dockerfile

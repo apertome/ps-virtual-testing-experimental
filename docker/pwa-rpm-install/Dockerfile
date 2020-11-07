@@ -1,4 +1,5 @@
-FROM centos:7
+FROM centos/systemd
+#FROM centos:7
 ENV container docker
 
 #cleanup to enable systemd
@@ -15,12 +16,17 @@ RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
 #Install repos we will use in testing
 RUN yum update -y && \
     yum install -y epel-release && \
-    yum install -y http://linux.mirrors.es.net/perfsonar/el7/x86_64/4/packages/perfSONAR-repo-0.9-1.noarch.rpm && \
-    yum install -y http://linux.mirrors.es.net/perfsonar/el7/x86_64/4/packages/perfSONAR-repo-nightly-minor-0.9-1.noarch.rpm && \
+    #yum install -y http://linux.mirrors.es.net/perfsonar/el7/x86_64/4/packages/perfSONAR-repo-0.9-1.noarch.rpm && \
+    #yum install -y http://linux.mirrors.es.net/perfsonar/el7/x86_64/4/packages/perfSONAR-repo-nightly-minor-0.9-1.noarch.rpm && \
+    yum install -y https://ps-jenkins.grnoc.iu.edu/nightly/el/7/x86_64/perfsonar/minor/packages/perfSONAR-repo-0.10-1.49.b41e4e9fdbf6c79f04aac62c438a6253d93e24dd.noarch.rpm && \
+    yum install -y https://ps-jenkins.grnoc.iu.edu/nightly/el/7/x86_64/perfsonar/minor/packages/perfSONAR-repo-nightly-minor-0.10-1.49.b41e4e9fdbf6c79f04aac62c438a6253d93e24dd.noarch.rpm && \
+    
+    #yum install -y https://ps-jenkins.grnoc.iu.edu/nightly/el/7/x86_64/perfsonar/minor/packages/perfSONAR-repo-extras-0.10-1.49.b41e4e9fdbf6c79f04aac62c438a6253d93e24dd.noarch.rpm && \
     #yum install -y http://linux.mirrors.es.net/perfsonar/el7/x86_64/4/packages/perfSONAR-repo-nightly-patch-0.9-1.noarch.rpm && \
     #yum install -y http://linux.mirrors.es.net/perfsonar/el7/x86_64/4/packages/perfSONAR-repo-staging-0.9-1.noarch.rpm && \
     #sed -i 's/enabled = 1/enabled = 0/' /etc/yum.repos.d/perfSONA*.repo && \
-    yum clean all && \ 
+    yum makecache && \ 
+    yum search mongodb && \
     yum install -y perfsonar-psconfig-web-*
     #systemctl enable httpd && \
     #systemctl start httpd

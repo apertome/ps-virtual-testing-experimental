@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.5'
 services:
   centos_pwa:
     image: perfsonar/dev-centos-clean:latest
@@ -11,7 +11,7 @@ services:
     volumes:
        - /sys/fs/cgroup:/sys/fs/cgroup:ro
     ports:
-       - "8443:443"
+       - "443:443"
     #ulimits:
     #   nproc: 65535
     #   nofile:
