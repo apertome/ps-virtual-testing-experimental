@@ -23,7 +23,8 @@ RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
     rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 #Install repos we will use in testing
-RUN yum update -y && \
+RUN yum clean all && \
+    yum update -y && \
     yum install -y epel-release && \
     #yum install -y http://software.internet2.edu/rpms/el7/x86_64/4.2.4/RPMS/perfSONAR-repo-0.9-1.noarch.rpm && \
     yum install -y http://linux.mirrors.es.net/perfsonar/el7/x86_64/4/packages/perfSONAR-repo-0.10-1.noarch.rpm

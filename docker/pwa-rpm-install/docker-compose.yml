@@ -12,9 +12,16 @@ services:
        - /sys/fs/cgroup:/sys/fs/cgroup:ro
     ports:
        - "443:443"
+    networks:
+       - bundle_testing
     #ulimits:
     #   nproc: 65535
     #   nofile:
     #       soft: 20000
     #       hard: 40000
 
+networks:
+  bundle_testing:
+    external:
+      name: bundle_testing
+      #driver: bridge
