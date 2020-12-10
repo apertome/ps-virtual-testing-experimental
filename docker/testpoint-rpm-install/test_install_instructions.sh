@@ -1,7 +1,8 @@
 #!/usr/bin/bash
 
 # default repo
-REPO="nightly-minor"
+# if blank/not specified, PRODUCTION is used
+REPO=""
 
 # set repo if commandline argument is set
 if [ -n "$1" ]; then
@@ -15,7 +16,7 @@ declare -a BUNDLES=("perfsonar-psconfig-web-admin-ui perfsonar-psconfig-web-admi
 TEXT_STATUS=""
 OUT=""
 docker-compose down
-docker-compose build --no-cache --force-rm --build-arg bundle="$BUNDLE"  centos_clean
+docker-compose build --no-cache --force-rm --build-arg bundle="$BUNDLE" centos_clean
 docker rm -f single-sanity
 for BUNDLE in ${BUNDLES[@]}; do
     echo "BUILD BUNDLE $BUNDLE"
@@ -26,21 +27,31 @@ for BUNDLE in ${BUNDLES[@]}; do
     CONTAINER="rpm-install-transient"
     echo "CONTAINER: $CONTAINER"
     docker-compose exec centos_clean /usr/bin/ps_install_bundle.sh "$BUNDLE" "$REPO"
+    STATUS=$?
     echo "LABEL: $LABEL"
-    OUT+=`docker run --privileged --name single-sanity --network bundle_testing -v /data/sanity/single-sanity.pl:/app/single-sanity.pl --rm single-sanity $CONTAINER $BUNDLE $REPO`
+    docker run --privileged --name single-sanity --network bundle_testing -v /data/sanity/single-sanity.pl:/app/single-sanity.pl --rm single-sanity $CONTAINER $BUNDLE $REPO
+    SERVICE_STATUS=$?
+    #OUT+=`docker run --privileged --name single-sanity --network bundle_testing -v /data/sanity/single-sanity.pl:/app/single-sanity.pl --rm single-sanity $CONTAINER $BUNDLE $REPO`
     OUT+="\n"
     echo "LABEL: $LABEL"
     echo -e "OUT:\n$OUT\n"
 
-    STATUS=$?
-    echo "$BUNDLE Tried to build; status: $STATUS"
+    echo "$BUNDLE Tried to install; status: $STATUS"
     if [ "$STATUS" -eq "0" ]; then
-        echo "$BUNDLE SUCCEDED!"
-        TEXT_STATUS+="$BUNDLE SUCCEEDED!\n"
+        echo "$BUNDLE install SUCCEDED!"
+        TEXT_STATUS+="$BUNDLE install SUCCEEDED!\n"
         #exit;
     else
-        echo "$BUNDLE FAILED!"
-        TEXT_STATUS+="$BUNDLE FAILED!\n"
+        echo "$BUNDLE install FAILED!"
+        TEXT_STATUS+="$BUNDLE install FAILED!\n"
+    fi
+    if [ "$SERVICE_STATUS" -eq "0" ]; then
+        echo "$BUNDLE service checks RAN OK!"
+        TEXT_STATUS+="$BUNDLE service checks RAN OK!\n"
+        #exit;
+    else
+        echo "$BUNDLE service checks FAILED TO RUN!"
+        TEXT_STATUS+="$BUNDLE services FAILED TO RUN!\n"
     fi
     docker-compose down
 
