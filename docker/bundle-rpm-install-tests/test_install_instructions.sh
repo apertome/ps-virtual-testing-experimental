@@ -1,5 +1,21 @@
 #!/usr/bin/bash
 
+#######
+# test_install_instructions.sh
+# REQUIRES:
+#  - jq
+#  - single-sanity to be built on the same host
+# This script is designed to test the rpm bundle installation process
+# documented on the perfsonar docs site:
+# http://docs.perfsonar.net/install_centos.html
+# The steps in the script recreate what the instructions ask for, but if
+# the instructions are changed, this script will need to be updated to match
+# Can optionally specify a repo to use. By default, uses the production repo. Options:
+# - nightly-minor
+# - nightly-patch
+# - staging
+#######
+
 # default repo
 # if blank/not specified, PRODUCTION is used
 REPO=""
@@ -16,8 +32,7 @@ declare -a BUNDLES=("perfsonar-psconfig-web-admin-ui perfsonar-psconfig-web-admi
 TEXT_STATUS=""
 OUT=""
 docker-compose down
-#docker-compose build centos_clean
-docker-compose build --no-cache --force-rm --build-arg bundle="$BUNDLE" centos_clean
+docker-compose build --no-cache --force-rm centos_clean
 docker rm -f install-single-sanity
 for BUNDLE in ${BUNDLES[@]}; do
     echo "BUILD BUNDLE $BUNDLE"
@@ -31,9 +46,7 @@ for BUNDLE in ${BUNDLES[@]}; do
     STATUS=$?
     echo "LABEL: $LABEL"
     docker run --privileged --name install-single-sanity --network bundle_testing -v /data/sanity/single-sanity.pl:/app/single-sanity.pl --rm single-sanity $CONTAINER $BUNDLE $REPO
-    #docker run --privileged --name single-sanity --network bundle_testing -v /data/sanity/single-sanity.pl:/app/single-sanity.pl --rm single-sanity $CONTAINER $BUNDLE $REPO
     SERVICE_STATUS=$?
-    #OUT+=`docker run --privileged --name single-sanity --network bundle_testing -v /data/sanity/single-sanity.pl:/app/single-sanity.pl --rm single-sanity $CONTAINER $BUNDLE $REPO`
     OUT+="\n"
     echo "LABEL: $LABEL"
     echo -e "OUT:\n$OUT\n"
