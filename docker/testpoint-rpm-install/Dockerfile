@@ -26,8 +26,8 @@ RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
 RUN yum clean all && \
     yum update -y && \
     yum install -y epel-release && \
-    #yum install -y http://software.internet2.edu/rpms/el7/x86_64/4.2.4/RPMS/perfSONAR-repo-0.9-1.noarch.rpm && \
     yum install -y http://linux.mirrors.es.net/perfsonar/el7/x86_64/4/packages/perfSONAR-repo-0.10-1.noarch.rpm
+    #yum install -y http://software.internet2.edu/rpms/el7/x86_64/4.2.4/RPMS/perfSONAR-repo-0.9-1.noarch.rpm && \
     #yum install -y http://linux.mirrors.es.net/perfsonar/el7/x86_64/4/packages/perfSONAR-repo-nightly-minor-0.10-1.noarch.rpm 
     #yum install -y http://linux.mirrors.es.net/perfsonar/el7/x86_64/4/packages/perfSONAR-repo-nightly-patch-0.9-1.noarch.rpm && \
     #yum install -y http://linux.mirrors.es.net/perfsonar/el7/x86_64/4/packages/perfSONAR-repo-staging-0.9-1.noarch.rpm && \
